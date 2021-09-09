@@ -62,7 +62,19 @@ class AboutPageProvider {
     BuildContext context, {
     Key? key,
   }) {
-    return Navigator.of(context).restorablePushNamed(
+    return Navigator.of(context).pushNamed(
+      routeName,
+      arguments: <String, dynamic>{
+        'key': key,
+      },
+    );
+  }
+
+  static String restorePushByNamed<T extends Object?>(
+    BuildContext context, {
+    Key? key,
+  }) {
+    return Navigator.of(context).restorablePushNamed<T>(
       routeName,
       arguments: <String, dynamic>{
         'key': key,
