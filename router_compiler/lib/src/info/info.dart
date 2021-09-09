@@ -10,6 +10,7 @@ class PageInfo {
     required this.routeName,
     required this.fieldRename,
     required this.constructor,
+    required this.restoreable,
     this.flavor,
   });
 
@@ -20,6 +21,7 @@ class PageInfo {
   final FieldRename fieldRename;
   final ConstructorElement constructor;
   final String? flavor;
+  final bool restoreable;
 
   String get controllerDisplayName => '${displayName}Controller';
 

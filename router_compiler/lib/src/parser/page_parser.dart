@@ -35,6 +35,8 @@ class PageParser {
 
     final String? flavor = annotation.peek('flavor')?.stringValue;
 
+    final bool restoreable = annotation.peek('restoreable')?.boolValue ?? false;
+
     return PageInfo(
       uri: buildStep.inputId.uri,
       displayName: element.displayName,
@@ -43,6 +45,7 @@ class PageParser {
       fieldRename: fieldRename,
       constructor: constructor,
       flavor: flavor,
+      restoreable: restoreable,
     );
   }
 }

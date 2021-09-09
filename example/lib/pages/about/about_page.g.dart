@@ -62,7 +62,7 @@ class AboutPageProvider {
     BuildContext context, {
     Key? key,
   }) {
-    return Navigator.of(context).pushNamed(
+    return Navigator.of(context).restorablePushNamed(
       routeName,
       arguments: <String, dynamic>{
         'key': key,

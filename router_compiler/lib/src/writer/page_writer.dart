@@ -151,10 +151,13 @@ class PageWriter {
       ].join(', ')}) {')
       ..writeAll(<String>[
         if (info.constructor.parameters.isNotEmpty) ...<String>[
-          'return Navigator.of(context).pushNamed(routeName, arguments: <String, dynamic>{${info.constructor.parameters.map((ParameterElement element) => '\'${info.convertField(element.name)}\': ${element.name},').join('\n')}},);',
+          if (info.restoreable)
+            'return Navigator.of(context).restorablePushNamed(routeName, arguments: <String, dynamic>{${info.constructor.parameters.map((ParameterElement element) => '\'${info.convertField(element.name)}\': ${element.name},').join('\n')}},);'
+          else
+            'return Navigator.of(context).pushNamed(routeName, arguments: <String, dynamic>{${info.constructor.parameters.map((ParameterElement element) => '\'${info.convertField(element.name)}\': ${element.name},').join('\n')}},);',
         ],
         if (info.constructor.parameters.isEmpty) ...<String>[
-          'return Navigator.of(context).pushNamed(routeName);',
+          if (info.restoreable) 'return Navigator.of(context).restorablePushNamed(routeName);' else 'return Navigator.of(context).pushNamed(routeName);',
         ],
       ], '\n')
       ..writeln('}');
