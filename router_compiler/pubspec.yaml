@@ -12,7 +12,7 @@ dependencies:
   router_annotation:
     git:
       url: https://github.com/HollySite/router_kit
-      ref: 3ef7d184956617146f0d4ee02e4bbcfa4bc6dfa5
+      ref: 2.0.0
       path: router_annotation
 
   analyzer: ^1.5.0

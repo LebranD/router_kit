@@ -249,9 +249,11 @@ packages:
   router_annotation:
     dependency: "direct main"
     description:
-      path: "../router_annotation"
-      relative: true
-    source: path
+      path: router_annotation
+      ref: "2.0.0"
+      resolved-ref: bd7ee815ffd9e862cda405f79d2e5772c4d452d3
+      url: "https://github.com/HollySite/router_kit"
+    source: git
     version: "1.0.0"
   shelf:
     dependency: transitive
