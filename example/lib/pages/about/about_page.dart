@@ -8,6 +8,7 @@ part 'about_page.g.dart';
   name: '关于',
   routeName: '/about',
   flavor: 'target',
+  restoreable: true,
 )
 class AboutPage extends StatefulWidget {
   const AboutPage({Key? key}) : super(key: key);

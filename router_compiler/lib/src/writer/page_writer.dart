@@ -159,6 +159,33 @@ class PageWriter {
       ], '\n')
       ..writeln('}');
 
+    _buffer.writeln();
+
+    if (info.restoreable) {
+      _buffer
+        ..writeln('static String restorePushByNamed<T extends Object${withNullability ? '?' : ''}>(${<String>[
+          'BuildContext context',
+          if (info.constructor.parameters.any((ParameterElement element) => !element.isNamed && !element.isOptional))
+            info.constructor.parameters
+                .where((ParameterElement element) => !element.isNamed && !element.isOptional)
+                .map((ParameterElement element) => '${formatPrettyDisplay(element.type, withNullability: withNullability)} ${element.name}')
+                .join(', '),
+          if (info.constructor.parameters.any((ParameterElement element) => !element.isNamed && element.isOptional))
+            '[${info.constructor.parameters.where((ParameterElement element) => !element.isNamed && element.isOptional).map((ParameterElement element) => '${formatPrettyDisplay(element.type, withNullability: withNullability)} ${element.name}${element.hasDefaultValue ? ' = ${element.defaultValueCode}' : ''}').join(', ')},]',
+          if (info.constructor.parameters.any((ParameterElement element) => element.isNamed))
+            '{${info.constructor.parameters.where((ParameterElement element) => element.isNamed).map((ParameterElement element) => '${withNullability && element.isRequiredNamed ? 'required ' : ''}${!withNullability && element.hasRequired ? '@required ' : ''}${formatPrettyDisplay(element.type, withNullability: withNullability)} ${element.name}${element.hasDefaultValue ? ' = ${element.defaultValueCode}' : ''}').join(', ')},}',
+        ].join(', ')}) {')
+        ..writeAll(<String>[
+          if (info.constructor.parameters.isNotEmpty) ...<String>[
+            'return Navigator.of(context).restorablePushNamed<T>(routeName, arguments: <String, dynamic>{${info.constructor.parameters.map((ParameterElement element) => '\'${info.convertField(element.name)}\': ${element.name},').join('\n')}},);'
+          ],
+          if (info.constructor.parameters.isEmpty) ...<String>[
+            'return Navigator.of(context).restorablePushNamed<T>(routeName);',
+          ],
+        ], '\n')
+        ..writeln('}');
+    }
+
     // end
     _buffer.writeln('}');
   }
