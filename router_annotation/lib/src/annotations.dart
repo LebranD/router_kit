@@ -1,3 +1,5 @@
+import 'package:page_transition/page_transition.dart';
+
 enum FieldRename {
   none,
   kebab,
@@ -12,6 +14,7 @@ class Page {
     this.fieldRename = FieldRename.snake,
     this.flavor,
     this.restoreable = false,
+    this.transitionType = PageTransitionType.rightToLeft,
   });
 
   final String name;
@@ -19,6 +22,7 @@ class Page {
   final FieldRename fieldRename;
   final String? flavor;
   final bool restoreable;
+  final PageTransitionType transitionType;
 }
 
 class Manifest {
