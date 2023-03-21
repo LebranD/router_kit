@@ -92,6 +92,22 @@ class PageWriter {
 
     _buffer.writeln();
 
+    _buffer.writeln('static const bool fullscreenDialog = ${info.fullscreenDialog};');
+
+    _buffer.writeln();
+
+    _buffer.writeln('static const bool opaque = ${info.opaque};');
+
+    _buffer.writeln();
+
+    _buffer.writeln('static const bool inheritTheme = ${info.inheritTheme};');
+
+    _buffer.writeln();
+
+    _buffer.writeln('static const bool isIos = ${info.isIos};');
+
+    _buffer.writeln();
+
     //
     _buffer.writeln('static final WidgetBuilder routeBuilder = (BuildContext context) {');
     if (info.constructor.parameters.isNotEmpty) {
@@ -155,7 +171,7 @@ class PageWriter {
       ].join(', ')}) {')
       ..writeAll(<String>[
         if (info.constructor.parameters.isNotEmpty) ...<String>[
-          'return Navigator.of(context).pushNamed(routeName, arguments: <String, dynamic>{\'transitionType\': transitionType,${info.constructor.parameters.map((ParameterElement element) => '\'${info.convertField(element.name)}\': ${element.name},').join('\n')}},);',
+          'return Navigator.of(context).pushNamed(routeName, arguments: <String, dynamic>{\'transitionType\':transitionType,\'fullscreenDialog\':fullscreenDialog,\'opaque\':opaque,\'inheritTheme\':inheritTheme,\'isIos\':isIos${info.constructor.parameters.map((ParameterElement element) => '\'${info.convertField(element.name)}\': ${element.name},').join('\n')}},);',
         ],
         if (info.constructor.parameters.isEmpty) ...<String>[
           'return Navigator.of(context).pushNamed(routeName);',
