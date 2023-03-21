@@ -23,7 +23,13 @@ class PageParser {
       throw InvalidGenerationSourceError('`@$Page` routeName can not be null or empty.', element: element);
     }
     FieldRename? _fromDartObject(ConstantReader reader) {
-      return reader.isNull ? null : enumValueForDartObject(reader.objectValue, FieldRename.values);
+      return reader.isNull
+          ? null
+          : enumValueForDartObject<FieldRename>(
+              reader.objectValue,
+              FieldRename.values,
+              (FieldRename f) => f.toString().split('.')[1],
+            );
     }
 
     final FieldRename fieldRename = _fromDartObject(annotation.read('fieldRename')) ?? FieldRename.snake;

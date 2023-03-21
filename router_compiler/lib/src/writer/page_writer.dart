@@ -88,6 +88,10 @@ class PageWriter {
     // blank
     _buffer.writeln();
 
+    _buffer.writeln('static const PageTransitionType transitionType = ${info.transitionType};');
+
+    _buffer.writeln();
+
     //
     _buffer.writeln('static final WidgetBuilder routeBuilder = (BuildContext context) {');
     if (info.constructor.parameters.isNotEmpty) {
@@ -151,7 +155,7 @@ class PageWriter {
       ].join(', ')}) {')
       ..writeAll(<String>[
         if (info.constructor.parameters.isNotEmpty) ...<String>[
-          'return Navigator.of(context).pushNamed(routeName, arguments: <String, dynamic>{${info.constructor.parameters.map((ParameterElement element) => '\'${info.convertField(element.name)}\': ${element.name},').join('\n')}},);',
+          'return Navigator.of(context).pushNamed(routeName, arguments: <String, dynamic>{\'transitionType\': transitionType,${info.constructor.parameters.map((ParameterElement element) => '\'${info.convertField(element.name)}\': ${element.name},').join('\n')}},);',
         ],
         if (info.constructor.parameters.isEmpty) ...<String>[
           'return Navigator.of(context).pushNamed(routeName);',

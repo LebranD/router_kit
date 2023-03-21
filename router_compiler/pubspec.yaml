@@ -1,24 +1,25 @@
 name: router_compiler
 description: Flutter Router Compiler.
-version: 1.0.0
-# author: v7lin <v7lin@qq.com>
-homepage: https://github.com/HollySite/router_kit
+version: 2.0.0
+homepage: https://github.com/LebranD/router_kit
 publish_to: none
 
 environment:
-  sdk: ">=2.12.0 <3.0.0"
+  sdk: '>=2.18.1 <3.0.0'
 
 dependencies:
   router_annotation:
-    git:
-      url: https://github.com/HollySite/router_kit
-      ref: 2.0.0
-      path: router_annotation
+    path: ../router_annotation
+  # router_annotation: # ^2.0.0
+  #   git:
+  #     url: https://github.com/LebranD/router_kit
+  #     ref: 2.0.0
+  #     path: router_annotation
 
-  analyzer: ^1.5.0
+  analyzer: ^5.2.0
   logging: ^1.0.1
   build: ^2.0.1
-  source_gen: ^1.0.0
+  source_gen: ^1.2.7
 
 dev_dependencies:
   test:

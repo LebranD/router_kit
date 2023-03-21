@@ -42,6 +42,9 @@ class AboutPageProvider {
 
   static const String? flavor = 'target';
 
+  static const PageTransitionType transitionType =
+      PageTransitionType.rightToLeft;
+
   static final WidgetBuilder routeBuilder = (BuildContext context) {
     Map<String, dynamic>? arguments =
         ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>?;
@@ -65,6 +68,7 @@ class AboutPageProvider {
     return Navigator.of(context).pushNamed(
       routeName,
       arguments: <String, dynamic>{
+        'transitionType': transitionType,
         'key': key,
       },
     );

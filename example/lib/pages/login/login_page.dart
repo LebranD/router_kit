@@ -6,6 +6,7 @@ part 'login_page.g.dart';
 @rca.Page(
   name: '登录',
   routeName: '/login',
+  transitionType: rca.PageTransitionType.bottomToTop,
 )
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);

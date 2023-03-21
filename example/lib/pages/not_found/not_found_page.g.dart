@@ -42,6 +42,9 @@ class NotFoundPageProvider {
 
   static const String? flavor = null;
 
+  static const PageTransitionType transitionType =
+      PageTransitionType.rightToLeft;
+
   static final WidgetBuilder routeBuilder = (BuildContext context) {
     return NotFoundPage();
   };
