@@ -11,7 +11,7 @@ dependencies:
   router_annotation: # ^2.0.0
     git:
       url: https://github.com/LebranD/router_kit
-      ref: a097e074c536850431e6ae58fc6d9748138c6637
+      ref: 0cb3edc21a201e3c7bdc0db10492f1f4f36eff27
       path: router_annotation
 
   analyzer: ^5.2.0

@@ -277,8 +277,8 @@ packages:
     dependency: "direct main"
     description:
       path: router_annotation
-      ref: a097e074c536850431e6ae58fc6d9748138c6637
-      resolved-ref: a097e074c536850431e6ae58fc6d9748138c6637
+      ref: "0cb3edc21a201e3c7bdc0db10492f1f4f36eff27"
+      resolved-ref: "0cb3edc21a201e3c7bdc0db10492f1f4f36eff27"
       url: "https://github.com/LebranD/router_kit"
     source: git
     version: "2.0.0"
