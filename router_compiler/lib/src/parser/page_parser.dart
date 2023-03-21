@@ -43,6 +43,8 @@ class PageParser {
 
     final bool restoreable = annotation.peek('restoreable')?.boolValue ?? false;
 
+    final String? transitionType = annotation.peek('transitionType')?.stringValue;
+
     return PageInfo(
       uri: buildStep.inputId.uri,
       displayName: element.displayName,
@@ -52,6 +54,7 @@ class PageParser {
       constructor: constructor,
       flavor: flavor,
       restoreable: restoreable,
+      transitionType: transitionType,
     );
   }
 }

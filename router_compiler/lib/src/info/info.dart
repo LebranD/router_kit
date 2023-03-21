@@ -12,7 +12,7 @@ class PageInfo {
     required this.constructor,
     required this.restoreable,
     this.flavor,
-    this.transitionType = PageTransitionType.rightToLeft,
+    this.transitionType,
   });
 
   final Uri uri;
@@ -23,7 +23,7 @@ class PageInfo {
   final ConstructorElement constructor;
   final String? flavor;
   final bool restoreable;
-  final PageTransitionType transitionType;
+  final String? transitionType;
 
   String get controllerDisplayName => '${displayName}Controller';
 
