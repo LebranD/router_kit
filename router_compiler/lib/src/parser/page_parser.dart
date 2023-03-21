@@ -45,6 +45,14 @@ class PageParser {
 
     final String? transitionType = annotation.peek('transitionType')?.stringValue;
 
+    final bool? fullscreenDialog = annotation.peek('fullscreenDialog')?.boolValue;
+
+    final bool? opaque = annotation.peek('opaque')?.boolValue;
+
+    final bool? inheritTheme = annotation.peek('inheritTheme')?.boolValue;
+
+    final bool? isIos = annotation.peek('isIos')?.boolValue;
+
     return PageInfo(
       uri: buildStep.inputId.uri,
       displayName: element.displayName,
@@ -55,6 +63,10 @@ class PageParser {
       flavor: flavor,
       restoreable: restoreable,
       transitionType: transitionType,
+      fullscreenDialog: fullscreenDialog,
+      opaque: opaque,
+      inheritTheme: inheritTheme,
+      isIos: isIos,
     );
   }
 }
