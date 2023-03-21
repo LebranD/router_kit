@@ -88,7 +88,7 @@ class PageWriter {
     // blank
     _buffer.writeln();
 
-    _buffer.writeln('static const String transitionType = ${info.transitionType.name};');
+    _buffer.writeln('static const String transitionType = \'${info.transitionType.name}\';');
 
     _buffer.writeln();
 
