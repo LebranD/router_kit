@@ -28,10 +28,10 @@ class PageInfo {
   final String? flavor;
   final bool restoreable;
   final String? transitionType;
-  final bool? fullscreenDialog;
-  final bool? opaque;
-  final bool? inheritTheme;
-  final bool? isIos;
+  final bool fullscreenDialog;
+  final bool opaque;
+  final bool inheritTheme;
+  final bool isIos;
 
   String get controllerDisplayName => '${displayName}Controller';
 
