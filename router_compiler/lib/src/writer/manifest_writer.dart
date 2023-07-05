@@ -19,7 +19,7 @@ class ManifestWriter {
     _buffer.writeln();
 
     // import
-    _buffer.writeln('import \'package:flutter/widgets.dart\';');
+    // _buffer.writeln('import \'package:flutter/widgets.dart\';');
     for (final PageInfo info in infos) {
       _buffer.writeln('import \'${info.uri}\';');
     }
