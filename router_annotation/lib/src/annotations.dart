@@ -5,6 +5,12 @@ enum FieldRename {
   pascal,
 }
 
+enum PageTransitionType {
+  rightToLeft,
+  bottomToTop,
+  fade,
+}
+
 class Page {
   const Page({
     required this.name,
@@ -12,11 +18,9 @@ class Page {
     this.fieldRename = FieldRename.snake,
     this.flavor,
     this.restoreable = false,
-    this.transitionType = 'rightToLeft',
-    this.fullscreenDialog,
-    this.opaque,
-    this.inheritTheme,
-    this.isIos,
+    this.transitionType = PageTransitionType.rightToLeft,
+    this.fullscreenDialog = false,
+    this.opaque = false,
   });
 
   final String name;
@@ -24,11 +28,9 @@ class Page {
   final FieldRename fieldRename;
   final String? flavor;
   final bool restoreable;
-  final String transitionType;
-  final bool? fullscreenDialog;
-  final bool? opaque;
-  final bool? inheritTheme;
-  final bool? isIos;
+  final PageTransitionType transitionType;
+  final bool fullscreenDialog;
+  final bool opaque;
 }
 
 class Manifest {
