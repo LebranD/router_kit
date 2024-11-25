@@ -1,4 +1,5 @@
 import 'package:analyzer/dart/element/element.dart';
+import 'package:router_annotation/router_annotation.dart';
 import 'package:router_compiler/src/info/info.dart';
 import 'package:router_compiler/src/util/utils.dart';
 
@@ -88,7 +89,7 @@ class PageWriter {
     // blank
     _buffer.writeln();
 
-    _buffer.writeln('static const String transitionType = \'${info.transitionType}\';');
+    _buffer.writeln('static const PageTransitionType transitionType = \'${info.transitionType}\';');
 
     _buffer.writeln();
 
@@ -97,14 +98,6 @@ class PageWriter {
     _buffer.writeln();
 
     _buffer.writeln('static const bool opaque = ${info.opaque};');
-
-    _buffer.writeln();
-
-    _buffer.writeln('static const bool inheritTheme = ${info.inheritTheme};');
-
-    _buffer.writeln();
-
-    _buffer.writeln('static const bool isIos = ${info.isIos};');
 
     _buffer.writeln();
 
@@ -134,6 +127,48 @@ class PageWriter {
     }
     _buffer.writeln('};');
 
+    // 转场动画builder
+    _buffer.writeln('static final WidgetBuilder transitionRouteBuilder = (BuildContext context, RouteSettings settings) {');
+    if (info.constructor.parameters.isNotEmpty) {
+      if (info.transitionType == PageTransitionType.bottomToTop) {
+        _buffer.writeln('return PageRouteBuilder(');
+        _buffer.writeln('opaque: opaque,');
+        _buffer.writeln('fullscreenDialog: fullscreenDialog,');
+        _buffer.writeln('pageBuilder: (context, animation, secondaryAnimation) => routeBuilder(context),');
+        _buffer.writeln('transitionsBuilder: (context, animation, secondaryAnimation, child) {');
+        _buffer.writeln('return SlideTransition(');
+        _buffer.writeln('position: Tween<Offset>(begin: const Offset(0, 1), end: Offset.zero).animate(animation),');
+        _buffer.writeln('child: child,');
+        _buffer.writeln(');');
+        _buffer.writeln('},');
+        _buffer.writeln('settings: settings,');
+        _buffer.writeln(');');
+        _buffer.writeln(');');
+      } else if (info.transitionType == PageTransitionType.fade) {
+        _buffer.writeln('return PageRouteBuilder(');
+        _buffer.writeln('opaque: opaque,');
+        _buffer.writeln('fullscreenDialog: fullscreenDialog,');
+        _buffer.writeln('pageBuilder: (context, animation, secondaryAnimation) => routeBuilder(context),');
+        _buffer.writeln('transitionsBuilder: (context, animation, secondaryAnimation, child) {');
+        _buffer.writeln('return FadeTransition(');
+        _buffer.writeln('opacity: Tween<double>(begin: 0.0, end: 1.0).animate(animation),');
+        _buffer.writeln('child: child,');
+        _buffer.writeln(');');
+        _buffer.writeln('},');
+        _buffer.writeln('settings: settings,');
+        _buffer.writeln(');');
+        _buffer.writeln(');');
+      } else {
+        _buffer.writeln('return CupertinoPageRoute(');
+        _buffer.writeln('builder: (context) {');
+        _buffer.writeln('return routeBuilder(context);');
+        _buffer.writeln('},');
+        _buffer.writeln('settings: settings,');
+        _buffer.writeln(');');
+      }
+    }
+    _buffer.writeln('}');
+
     if (info.constructor.parameters.isNotEmpty) {
       // blank
       _buffer.writeln();
@@ -150,7 +185,8 @@ class PageWriter {
           if (info.constructor.parameters.any((ParameterElement element) => element.isNamed))
             '{${info.constructor.parameters.where((ParameterElement element) => element.isNamed).map((ParameterElement element) => '${withNullability && element.isRequiredNamed ? 'required ' : ''}${!withNullability && element.hasRequired ? '@required ' : ''}${formatPrettyDisplay(element.type, withNullability: withNullability)} ${element.name}${element.hasDefaultValue ? ' = ${element.defaultValueCode}' : ''}').join(', ')},}',
         ].join(', ')}) {')
-        ..writeln('return <String, dynamic>{${info.constructor.parameters.map((ParameterElement element) => '\'${info.convertField(element.name)}\': ${element.name},').join('\n')}};')
+        ..writeln(
+            'return <String, dynamic>{${info.constructor.parameters.map((ParameterElement element) => '\'${info.convertField(element.name)}\': ${element.name},').join('\n')}};')
         ..writeln('}');
     }
 

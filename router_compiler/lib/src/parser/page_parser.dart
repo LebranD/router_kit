@@ -9,7 +9,8 @@ import 'package:source_gen/source_gen.dart';
 class PageParser {
   const PageParser._();
 
-  static PageInfo parse(TypeChecker typeChecker, ClassElement element, ConstantReader annotation, BuildStep buildStep, {required bool withNullability}) {
+  static PageInfo parse(TypeChecker typeChecker, ClassElement element, ConstantReader annotation, BuildStep buildStep,
+      {required bool withNullability}) {
     if (!element.allSupertypes.map((InterfaceType supertype) => supertype.getDisplayString(withNullability: withNullability)).contains('Widget')) {
       throw InvalidGenerationSourceError('`@$Page` can only be used on Widget classes.', element: element);
     }
@@ -49,10 +50,6 @@ class PageParser {
 
     final bool opaque = annotation.peek('opaque')?.boolValue ?? false;
 
-    final bool inheritTheme = annotation.peek('inheritTheme')?.boolValue ?? false;
-
-    final bool isIos = annotation.peek('isIos')?.boolValue ?? false;
-
     return PageInfo(
       uri: buildStep.inputId.uri,
       displayName: element.displayName,
@@ -62,11 +59,12 @@ class PageParser {
       constructor: constructor,
       flavor: flavor,
       restoreable: restoreable,
-      transitionType: transitionType,
+      transitionType: PageTransitionType.values.firstWhere(
+        (PageTransitionType e) => e.name == transitionType,
+        orElse: () => PageTransitionType.rightToLeft,
+      ),
       fullscreenDialog: fullscreenDialog,
       opaque: opaque,
-      inheritTheme: inheritTheme,
-      isIos: isIos,
     );
   }
 }

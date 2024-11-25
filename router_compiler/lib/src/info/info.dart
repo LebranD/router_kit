@@ -15,8 +15,6 @@ class PageInfo {
     this.transitionType,
     this.fullscreenDialog = false,
     this.opaque = false,
-    this.inheritTheme = false,
-    this.isIos = false,
   });
 
   final Uri uri;
@@ -27,11 +25,9 @@ class PageInfo {
   final ConstructorElement constructor;
   final String? flavor;
   final bool restoreable;
-  final String? transitionType;
+  final PageTransitionType? transitionType;
   final bool fullscreenDialog;
   final bool opaque;
-  final bool inheritTheme;
-  final bool isIos;
 
   String get controllerDisplayName => '${displayName}Controller';
 
