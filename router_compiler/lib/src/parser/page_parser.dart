@@ -33,6 +33,16 @@ class PageParser {
             );
     }
 
+    PageTransitionType? _transitionFromDartObject(ConstantReader reader) {
+      return reader.isNull
+          ? null
+          : enumValueForDartObject<PageTransitionType>(
+              reader.objectValue,
+              PageTransitionType.values,
+              (PageTransitionType f) => f.toString().split('.').last,
+            );
+    }
+
     final FieldRename fieldRename = _fromDartObject(annotation.read('fieldRename')) ?? FieldRename.snake;
 
     final ConstructorElement? constructor = element.unnamedConstructor;
@@ -44,7 +54,7 @@ class PageParser {
 
     final bool restoreable = annotation.peek('restoreable')?.boolValue ?? false;
 
-    final String? transitionType = annotation.peek('transitionType')?.stringValue;
+    final PageTransitionType transitionType = _transitionFromDartObject(annotation.read('transitionType')) ?? PageTransitionType.rightToLeft;
 
     final bool fullscreenDialog = annotation.peek('fullscreenDialog')?.boolValue ?? false;
 
@@ -59,10 +69,7 @@ class PageParser {
       constructor: constructor,
       flavor: flavor,
       restoreable: restoreable,
-      transitionType: PageTransitionType.values.firstWhere(
-        (PageTransitionType e) => e.name == transitionType,
-        orElse: () => PageTransitionType.rightToLeft,
-      ),
+      transitionType: transitionType,
       fullscreenDialog: fullscreenDialog,
       opaque: opaque,
     );

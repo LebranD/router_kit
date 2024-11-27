@@ -1,5 +1,5 @@
 import 'package:analyzer/dart/element/element.dart';
-import 'package:router_annotation/router_annotation.dart';
+import 'package:dart_style/dart_style.dart';
 import 'package:router_compiler/src/info/info.dart';
 import 'package:router_compiler/src/util/utils.dart';
 
@@ -89,7 +89,7 @@ class PageWriter {
     // blank
     _buffer.writeln();
 
-    _buffer.writeln('static const PageTransitionType transitionType = \'${info.transitionType}\';');
+    _buffer.writeln('static const String transitionType = \'${info.transitionType.name}\';');
 
     _buffer.writeln();
 
@@ -126,48 +126,6 @@ class PageWriter {
       _buffer.writeln('return ${info.displayName}();');
     }
     _buffer.writeln('};');
-
-    // 转场动画builder
-    _buffer.writeln('static final WidgetBuilder transitionRouteBuilder = (BuildContext context, RouteSettings settings) {');
-    if (info.constructor.parameters.isNotEmpty) {
-      if (info.transitionType == PageTransitionType.bottomToTop) {
-        _buffer.writeln('return PageRouteBuilder(');
-        _buffer.writeln('opaque: opaque,');
-        _buffer.writeln('fullscreenDialog: fullscreenDialog,');
-        _buffer.writeln('pageBuilder: (context, animation, secondaryAnimation) => routeBuilder(context),');
-        _buffer.writeln('transitionsBuilder: (context, animation, secondaryAnimation, child) {');
-        _buffer.writeln('return SlideTransition(');
-        _buffer.writeln('position: Tween<Offset>(begin: const Offset(0, 1), end: Offset.zero).animate(animation),');
-        _buffer.writeln('child: child,');
-        _buffer.writeln(');');
-        _buffer.writeln('},');
-        _buffer.writeln('settings: settings,');
-        _buffer.writeln(');');
-        _buffer.writeln(');');
-      } else if (info.transitionType == PageTransitionType.fade) {
-        _buffer.writeln('return PageRouteBuilder(');
-        _buffer.writeln('opaque: opaque,');
-        _buffer.writeln('fullscreenDialog: fullscreenDialog,');
-        _buffer.writeln('pageBuilder: (context, animation, secondaryAnimation) => routeBuilder(context),');
-        _buffer.writeln('transitionsBuilder: (context, animation, secondaryAnimation, child) {');
-        _buffer.writeln('return FadeTransition(');
-        _buffer.writeln('opacity: Tween<double>(begin: 0.0, end: 1.0).animate(animation),');
-        _buffer.writeln('child: child,');
-        _buffer.writeln(');');
-        _buffer.writeln('},');
-        _buffer.writeln('settings: settings,');
-        _buffer.writeln(');');
-        _buffer.writeln(');');
-      } else {
-        _buffer.writeln('return CupertinoPageRoute(');
-        _buffer.writeln('builder: (context) {');
-        _buffer.writeln('return routeBuilder(context);');
-        _buffer.writeln('},');
-        _buffer.writeln('settings: settings,');
-        _buffer.writeln(');');
-      }
-    }
-    _buffer.writeln('}');
 
     if (info.constructor.parameters.isNotEmpty) {
       // blank
@@ -207,10 +165,10 @@ class PageWriter {
       ].join(', ')}) {')
       ..writeAll(<String>[
         if (info.constructor.parameters.isNotEmpty) ...<String>[
-          'return Navigator.of(context).pushNamed(routeName, arguments: <String, dynamic>{\'transitionType\':transitionType,\'fullscreenDialog\':fullscreenDialog,\'opaque\':opaque,\'inheritTheme\':inheritTheme,\'isIos\':isIos,${info.constructor.parameters.map((ParameterElement element) => '\'${info.convertField(element.name)}\': ${element.name},').join('\n')}},);',
+          'return Navigator.of(context).pushNamed(routeName, arguments: <String, dynamic>{\'transitionType\':transitionType,\'fullscreenDialog\':fullscreenDialog,\'opaque\':opaque,${info.constructor.parameters.map((ParameterElement element) => '\'${info.convertField(element.name)}\': ${element.name},').join('\n')}},);',
         ],
         if (info.constructor.parameters.isEmpty) ...<String>[
-          'return Navigator.of(context).pushNamed(routeName);',
+          'return Navigator.of(context).pushNamed(routeName, arguments: <String, dynamic>{\'transitionType\':transitionType,\'fullscreenDialog\':fullscreenDialog,\'opaque\':opaque,},);',
         ],
       ], '\n')
       ..writeln('}');
@@ -233,10 +191,10 @@ class PageWriter {
         ].join(', ')}) {')
         ..writeAll(<String>[
           if (info.constructor.parameters.isNotEmpty) ...<String>[
-            'return Navigator.of(context).restorablePushNamed<T>(routeName, arguments: <String, dynamic>{${info.constructor.parameters.map((ParameterElement element) => '\'${info.convertField(element.name)}\': ${element.name},').join('\n')}},);'
+            'return Navigator.of(context).restorablePushNamed<T>(routeName, arguments: <String, dynamic>{\'transitionType\':transitionType, \'fullscreenDialog\':fullscreenDialog,\'opaque\':opaque,${info.constructor.parameters.map((ParameterElement element) => '\'${info.convertField(element.name)}\': ${element.name},').join('\n')}},);'
           ],
           if (info.constructor.parameters.isEmpty) ...<String>[
-            'return Navigator.of(context).restorablePushNamed<T>(routeName);',
+            'return Navigator.of(context).restorablePushNamed<T>(routeName, arguments: <String, dynamic>{\'transitionType\':transitionType,\'fullscreenDialog\':fullscreenDialog,\'opaque\':opaque,},);',
           ],
         ], '\n')
         ..writeln('}');
@@ -247,5 +205,5 @@ class PageWriter {
   }
 
   @override
-  String toString() => _buffer.toString();
+  String toString() => DartFormatter(pageWidth: 150).format(_buffer.toString());
 }

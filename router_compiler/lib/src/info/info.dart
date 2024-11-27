@@ -12,7 +12,7 @@ class PageInfo {
     required this.constructor,
     required this.restoreable,
     this.flavor,
-    this.transitionType,
+    this.transitionType = PageTransitionType.rightToLeft,
     this.fullscreenDialog = false,
     this.opaque = false,
   });
@@ -25,7 +25,7 @@ class PageInfo {
   final ConstructorElement constructor;
   final String? flavor;
   final bool restoreable;
-  final PageTransitionType? transitionType;
+  final PageTransitionType transitionType;
   final bool fullscreenDialog;
   final bool opaque;
 
@@ -46,6 +46,10 @@ class PageInfo {
       default:
         throw InvalidGenerationSourceError('The provided `fieldRename` ($fieldRename) is not supported.');
     }
+  }
+
+  String convertTransitionField() {
+    return transitionType.name;
   }
 
   String _kebabCase(String input) => _fixCase(input, '-');
