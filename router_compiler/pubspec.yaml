@@ -14,7 +14,7 @@ dependencies:
       ref: 08db93e21eabf1fe7768c7b52e27d78d4a2d3be7
       path: router_annotation
 
-  analyzer: ^7.0.0
+  analyzer: ^5.13.0
   logging: ^1.0.1
   build: ^2.0.1
   source_gen: ^1.2.7

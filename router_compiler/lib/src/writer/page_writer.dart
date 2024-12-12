@@ -141,10 +141,10 @@ class PageWriter {
           if (info.constructor.parameters.any((ParameterElement element) => !element.isNamed && element.isOptional))
             '[${info.constructor.parameters.where((ParameterElement element) => !element.isNamed && element.isOptional).map((ParameterElement element) => '${formatPrettyDisplay(element.type, withNullability: withNullability)} ${element.name}${element.hasDefaultValue ? ' = ${element.defaultValueCode}' : ''}').join(', ')},]',
           if (info.constructor.parameters.any((ParameterElement element) => element.isNamed))
-            '{${info.constructor.parameters.where((ParameterElement element) => element.isNamed).map((ParameterElement element) => '${withNullability && element.isRequiredNamed ? 'required ' : ''}${!withNullability && element.hasRequired ? '@required ' : ''}${formatPrettyDisplay(element.type, withNullability: withNullability)} ${element.name}${element.hasDefaultValue ? ' = ${element.defaultValueCode}' : ''}').join(', ')},}',
+            '{${info.constructor.parameters.where((ParameterElement element) => element.isNamed).map((ParameterElement element) => '${withNullability && element.isRequiredNamed ? 'required ' : ''}${!withNullability && element.hasRequired ? '@required ' : ''}${formatPrettyDisplay(element.type, withNullability: withNullability)} ${element.name}${element.hasDefaultValue ? ' = ${element.defaultValueCode}' : ''}').join(', ')},}'
         ].join(', ')}) {')
         ..writeln(
-            'return <String, dynamic>{${info.constructor.parameters.map((ParameterElement element) => '\'${info.convertField(element.name)}\': ${element.name},').join('\n')}};')
+            'return <String, dynamic>{${info.constructor.parameters.map((ParameterElement element) => '\'${info.convertField(element.name)}\': ${element.name},').join('\n')} \'transitionType\': transitionType, \'fullscreenDialog\': fullscreenDialog, \'opaque\': opaque};')
         ..writeln('}');
     }
 
