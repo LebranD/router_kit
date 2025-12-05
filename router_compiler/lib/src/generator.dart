@@ -1,3 +1,5 @@
+// ignore_for_file: deprecated_member_use
+
 import 'package:analyzer/dart/element/element.dart';
 import 'package:build/build.dart';
 import 'package:logging/logging.dart';
@@ -23,7 +25,7 @@ class PageCompilerGenerator extends GeneratorForAnnotation<Page> {
     }
 
     try {
-      final bool withNullability = element.library.isNonNullableByDefault;
+      const bool withNullability = true;
       final PageInfo info = PageParser.parse(typeChecker, element, annotation, buildStep, withNullability: withNullability);
       _log.info('${info.displayName}{name: ${info.name}, routeName: ${info.routeName}}');
       infoMap[info.routeName] = info;

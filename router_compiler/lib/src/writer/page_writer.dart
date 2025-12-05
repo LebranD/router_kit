@@ -1,5 +1,8 @@
+// ignore_for_file: deprecated_member_use
+
 import 'package:analyzer/dart/element/element.dart';
 import 'package:dart_style/dart_style.dart';
+import 'package:pub_semver/pub_semver.dart';
 import 'package:router_compiler/src/info/info.dart';
 import 'package:router_compiler/src/util/utils.dart';
 
@@ -205,5 +208,5 @@ class PageWriter {
   }
 
   @override
-  String toString() => DartFormatter(pageWidth: 150).format(_buffer.toString());
+  String toString() => DartFormatter(pageWidth: 150, languageVersion: Version(3, 0, 0)).format(_buffer.toString());
 }

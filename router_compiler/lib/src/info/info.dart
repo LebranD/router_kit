@@ -1,6 +1,7 @@
+// ignore_for_file: deprecated_member_use
+
 import 'package:analyzer/dart/element/element.dart';
 import 'package:router_annotation/router_annotation.dart';
-import 'package:source_gen/source_gen.dart';
 
 class PageInfo {
   const PageInfo({
@@ -43,8 +44,6 @@ class PageInfo {
         return _snakeCase(name);
       case FieldRename.pascal:
         return _pascalCase(name);
-      default:
-        throw InvalidGenerationSourceError('The provided `fieldRename` ($fieldRename) is not supported.');
     }
   }
 
