@@ -62,6 +62,8 @@ class PageParser {
 
     final bool opaque = annotation.peek('opaque')?.boolValue ?? false;
 
+    final bool includeInManifest = annotation.peek('includeInManifest')?.boolValue ?? true;
+
     return PageInfo(
       uri: buildStep.inputId.uri,
       displayName: element.displayName,
@@ -74,6 +76,7 @@ class PageParser {
       transitionType: transitionType,
       fullscreenDialog: fullscreenDialog,
       opaque: opaque,
+      includeInManifest: includeInManifest,
     );
   }
 }

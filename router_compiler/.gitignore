@@ -12,3 +12,6 @@ doc/api/
 
 *.iml
 .idea/
+
+# FVM Version Cache
+.fvm/

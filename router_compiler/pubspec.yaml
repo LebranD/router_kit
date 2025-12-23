@@ -17,8 +17,6 @@ dependencies:
   source_gen: 2.0.0
 
 dev_dependencies:
-  test:
-
   pedantic:
 
   json_serializable:

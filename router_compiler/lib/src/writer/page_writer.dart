@@ -104,6 +104,10 @@ class PageWriter {
 
     _buffer.writeln();
 
+    _buffer.writeln('static const bool includeInManifest = ${info.includeInManifest};');
+
+    _buffer.writeln();
+
     //
     _buffer.writeln('static final WidgetBuilder routeBuilder = (BuildContext context) {');
     if (info.constructor.parameters.isNotEmpty) {
@@ -147,7 +151,7 @@ class PageWriter {
             '{${info.constructor.parameters.where((ParameterElement element) => element.isNamed).map((ParameterElement element) => '${withNullability && element.isRequiredNamed ? 'required ' : ''}${!withNullability && element.hasRequired ? '@required ' : ''}${formatPrettyDisplay(element.type, withNullability: withNullability)} ${element.name}${element.hasDefaultValue ? ' = ${element.defaultValueCode}' : ''}').join(', ')},}'
         ].join(', ')}) {')
         ..writeln(
-            'return <String, dynamic>{${info.constructor.parameters.map((ParameterElement element) => '\'${info.convertField(element.name)}\': ${element.name},').join('\n')} \'transitionType\': transitionType, \'fullscreenDialog\': fullscreenDialog, \'opaque\': opaque};')
+            'return <String, dynamic>{${info.constructor.parameters.map((ParameterElement element) => '\'${info.convertField(element.name)}\': ${element.name},').join('\n')} \'transitionType\': transitionType, \'fullscreenDialog\': fullscreenDialog, \'opaque\': opaque, \'includeInManifest\': includeInManifest};')
         ..writeln('}');
     }
 
@@ -171,7 +175,7 @@ class PageWriter {
           'return Navigator.of(context).pushNamed(routeName, arguments: <String, dynamic>{\'transitionType\':transitionType,\'fullscreenDialog\':fullscreenDialog,\'opaque\':opaque,${info.constructor.parameters.map((ParameterElement element) => '\'${info.convertField(element.name)}\': ${element.name},').join('\n')}},);',
         ],
         if (info.constructor.parameters.isEmpty) ...<String>[
-          'return Navigator.of(context).pushNamed(routeName, arguments: <String, dynamic>{\'transitionType\':transitionType,\'fullscreenDialog\':fullscreenDialog,\'opaque\':opaque,},);',
+          'return Navigator.of(context).pushNamed(routeName, arguments: <String, dynamic>{\'transitionType\':transitionType,\'fullscreenDialog\':fullscreenDialog,\'opaque\':opaque,\'includeInManifest\':includeInManifest,},);',
         ],
       ], '\n')
       ..writeln('}');
@@ -194,10 +198,10 @@ class PageWriter {
         ].join(', ')}) {')
         ..writeAll(<String>[
           if (info.constructor.parameters.isNotEmpty) ...<String>[
-            'return Navigator.of(context).restorablePushNamed<T>(routeName, arguments: <String, dynamic>{\'transitionType\':transitionType, \'fullscreenDialog\':fullscreenDialog,\'opaque\':opaque,${info.constructor.parameters.map((ParameterElement element) => '\'${info.convertField(element.name)}\': ${element.name},').join('\n')}},);'
+            'return Navigator.of(context).restorablePushNamed<T>(routeName, arguments: <String, dynamic>{\'transitionType\':transitionType, \'fullscreenDialog\':fullscreenDialog,\'opaque\':opaque,\'includeInManifest\':includeInManifest,${info.constructor.parameters.map((ParameterElement element) => '\'${info.convertField(element.name)}\': ${element.name},').join('\n')}},);'
           ],
           if (info.constructor.parameters.isEmpty) ...<String>[
-            'return Navigator.of(context).restorablePushNamed<T>(routeName, arguments: <String, dynamic>{\'transitionType\':transitionType,\'fullscreenDialog\':fullscreenDialog,\'opaque\':opaque,},);',
+            'return Navigator.of(context).restorablePushNamed<T>(routeName, arguments: <String, dynamic>{\'transitionType\':transitionType,\'fullscreenDialog\':fullscreenDialog,\'opaque\':opaque,\'includeInManifest\':includeInManifest,},);',
           ],
         ], '\n')
         ..writeln('}');
