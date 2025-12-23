@@ -16,6 +16,7 @@ class PageInfo {
     this.transitionType = PageTransitionType.rightToLeft,
     this.fullscreenDialog = false,
     this.opaque = false,
+    this.includeInManifest = true,
   });
 
   final Uri uri;
@@ -29,7 +30,8 @@ class PageInfo {
   final PageTransitionType transitionType;
   final bool fullscreenDialog;
   final bool opaque;
-
+  final bool includeInManifest;
+  
   String get controllerDisplayName => '${displayName}Controller';
 
   String get providerDisplayName => '${displayName}Provider';

@@ -212,5 +212,5 @@ class PageWriter {
   }
 
   @override
-  String toString() => DartFormatter(pageWidth: 150, languageVersion: Version(3, 0, 0)).format(_buffer.toString());
+  String toString() => DartFormatter(pageWidth: 150).format(_buffer.toString());
 }

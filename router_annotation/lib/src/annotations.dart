@@ -21,6 +21,7 @@ class Page {
     this.transitionType = PageTransitionType.rightToLeft,
     this.fullscreenDialog = false,
     this.opaque = false,
+    this.includeInManifest = true,
   });
 
   final String name;
@@ -31,6 +32,7 @@ class Page {
   final PageTransitionType transitionType;
   final bool fullscreenDialog;
   final bool opaque;
+  final bool includeInManifest;
 }
 
 class Manifest {

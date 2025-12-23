@@ -24,13 +24,13 @@ class ManifestWriter {
 import 'package:flutter/cupertino.dart';
 import 'package:router_annotation/router_annotation.dart';
 
-${infos.map((PageInfo info) => 'import \'${info.uri}\';').join('\n')}
+${infos.where((PageInfo info) => info.includeInManifest).map((PageInfo info) => 'import \'${info.uri}\';').join('\n')}
 
 class AppManifest {
   const AppManifest._();
 
   static final List<dynamic> controllers = <dynamic>[
-${infos.map((PageInfo info) => '${info.controllerDisplayName}(),').join('\n')}
+${infos.where((PageInfo info) => info.includeInManifest).map((PageInfo info) => '${info.controllerDisplayName}(),').join('\n')}
   ];
 
   static PageRoute transitionRouteBuilder(RouteSettings settings, WidgetBuilder routeBuilder) {
@@ -70,5 +70,5 @@ ${infos.map((PageInfo info) => '${info.controllerDisplayName}(),').join('\n')}
   }
 
   @override
-  String toString() => DartFormatter(pageWidth: 150, languageVersion: Version(3, 0, 0)).format(_buffer.toString());
+  String toString() => DartFormatter(pageWidth: 150).format(_buffer.toString());
 }

@@ -28,7 +28,9 @@ class PageCompilerGenerator extends GeneratorForAnnotation<Page> {
       const bool withNullability = true;
       final PageInfo info = PageParser.parse(typeChecker, element, annotation, buildStep, withNullability: withNullability);
       _log.info('${info.displayName}{name: ${info.name}, routeName: ${info.routeName}}');
-      infoMap[info.routeName] = info;
+      if (info.includeInManifest) {
+        infoMap[info.routeName] = info;
+      }
       final PageWriter writer = PageWriter(info);
       writer.generate(withNullability: withNullability);
       return writer.toString();
